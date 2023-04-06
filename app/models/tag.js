@@ -13,9 +13,9 @@ const tagSchema = new mongoose.Schema({
     },
     desc:{
         type: String,
-        require: true,
+        //require: true,
         maxlength: 100,
-        minlength: 10,
+        minlength: 2,
     },
     createdTime:{
         type: String,

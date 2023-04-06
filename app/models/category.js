@@ -9,6 +9,10 @@ const categorySchema = new mongoose.Schema({
         maxlength: 30,
         minlength: 2
     },
+    /* counts:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Article",
+    }, */
     createdTime:{
         type: String,
         default: moment().format('YYYY-MM-DD HH:mm:ss')

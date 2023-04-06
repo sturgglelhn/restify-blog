@@ -12,7 +12,7 @@ const commentValidator = (data) => {
             "max": "此字段最多为20个字符",
             "min": "此字段最少为2个字符",
         }),
-        desc: Joi.string().max(100).min(2).required().messages({
+        desc: Joi.string().max(100).min(2).messages({
             "string.base": "desc必须为string类型",
             "required": "此字段为必填字段",
             "max": "此字段最多为200个字符",
