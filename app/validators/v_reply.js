@@ -12,7 +12,7 @@ const replyValidator = (data) => {
             "max": "title最多为200个字符",
             "min": "title最少为2个字符",
         }),
-        comment_id: Joi.objectId.messages({
+        comment_id: Joi.objectId().required().messages({
             "string.pattern.name": "comment_id 必须为objectId类型",
             "populate": "ref: Comment表",
         })

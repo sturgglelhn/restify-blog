@@ -12,11 +12,11 @@ const commentValidator = (data) => {
             "max": "title最多为200个字符",
             "min": "title最少为2个字符",
         }),
-        article_id: Joi.objectId.messages({
+        article_id: Joi.objectId().required().messages({
             "string.pattern.name": "article_id 必须为objectId类型",
             "populate": "ref:Article表",
         }),
-        reply_user_id: Joi.objectId.messages({
+        reply_user_id: Joi.objectId().messages({
             "string.pattern.name": "reply_user_id 必须为objectId类型",
             "populate": "ref:User表",
         }),

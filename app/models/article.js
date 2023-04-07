@@ -41,7 +41,8 @@ const articleSchema = new mongoose.Schema({
     category:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"Category",
-        require
+        require: true,
+        index: true,
     },
     //观看人数
     views:{

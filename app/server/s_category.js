@@ -69,7 +69,6 @@ exports.updateCategory = async(req, res) => {
     }
 }
 
-
 //删除
 exports.deleteCategory = async(req, res) => {
     console.log(req.body.id)

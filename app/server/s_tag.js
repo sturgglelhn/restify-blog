@@ -56,7 +56,7 @@ exports.deleteTag = async (req, res)=> {
         res.json({
             code: 0,
             msg: "失败！",
-            data: r,
+            data: err,
         })
     })
 }

@@ -8,6 +8,8 @@ const article = require('../app/routes/article')
 const user = require('../app/routes/user')
 const tag = require("../app/routes/tag")
 const category = require('../app/routes/category')
+const commnet = require('../app/routes/comment')
+const reply = require('../app/routes/reply')
 
 //加载数据模型
 require('../app//models/article')
@@ -34,6 +36,8 @@ article(server)
 user(server)
 tag(server)
 category(server)
+commnet(server)
+reply(server)
 
 module.exports = server;
 

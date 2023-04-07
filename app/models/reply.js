@@ -16,7 +16,8 @@ const replySchema = new mongoose.Schema({
     comment_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
-        require: true
+        require: true,
+        index: true,
     },
 
     // 时间
