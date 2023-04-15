@@ -7,8 +7,6 @@ exports.createComment = async(req,res) => {
     //数据校验
     const result = validate(req.body)
     if(result.error == null){
-
-
          //创建评论
         await Comment.create(req.body).then(r => {
             res.json({
@@ -31,23 +29,29 @@ exports.getListComment = async(req,res) => {
      const {
         pageIndex = 1, pageSize = 2,
     } = req.query;
-    //获取总数
     const commentId = req.params.id;
     console.log(commentId)
+    //获取文章中父评论下的总数
     const totalSize = await Comment.find({article_id: commentId}).countDocuments();
     //获取总页
     const totalPages = Math.ceil(totalSize / pageSize)
     
-    // 查找
+    // 查找文章下的父评论
     let data = await Comment.find({article_id: commentId}).populate('reply_user_id',{_id:0, username: 1})
                                 .skip(parseInt(pageIndex - 1) * pageSize)   //计算起始位置
                                 .limit(parseInt(pageSize))
                                 .sort({createdTime: -1}).select('-__v').lean()
 
+    /* //获取文章中父评论下的总数
+    const totalSize = data.length
+    //获取总页
+    const totalPages = Math.ceil(totalSize / pageSize) */
+
+    //通过父评论id查找子评论
     for(let item of data){
         console.log(item._id)
         let replyList = await Reply.find({comment_id: item._id}).select('-__v')
-        item['replyList'] = replyList.length    //数量
+        item['replyList'] = replyList.length    //得到之评论的数量
         //item['replyList'] = replyList
         //console.log(replyList.length)
     }

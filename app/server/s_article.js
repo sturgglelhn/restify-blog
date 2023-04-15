@@ -31,7 +31,7 @@ exports.getArticleList = async(req,res)=> {
     // 每页几条数据
     const pageSize = parseInt(req.query.pageSize) || 2;
     // 当前第一页
-    const paegNum = parseInt(req.query.paegNum) || 2;
+    const paegNum = parseInt(req.query.paegNum) || 3;
 
     //获取记录总数据，是一个预估值，不是准确值
     const count = await Article.estimatedDocumentCount();
@@ -40,25 +40,26 @@ exports.getArticleList = async(req,res)=> {
     const totalPages = Math.ceil(count / pageSize)
     console.log("总页："+totalPages)
 
-
+    //查找到所有文章，得到数组data
     const data = await Article.find({}).populate('author',{_id:0, username: 1})
                                         .sort({createdTime: -1})
                                         .limit(pageSize)            // 显示的文档数
                                         .skip((paegNum - 1) * pageSize) // 跳过的页数
                                         .select('title desc createdTime').lean()   //lean()的作用是把mongodb中的文档格式，生成JavaScript对象
 
-    //                                    
+    //通过文章id得到父评论                                    
     for(let item of data){
         let commentList = await Comment.find({article_id: item._id}).sort({createdTime: -1}).select('-__v').lean()
-        let totalCount = commentList.length
+        let totalCount = commentList.length     //父评论的数量
+        // 通过父评论id得到子评论
         for(var comment of commentList){
             replyCount = await Reply.find({comment_id: comment._id}).sort({createdTime: -1}).select('-__v').countDocuments()
-            totalCount += replyCount
+            totalCount += replyCount    //父评论数量和子评论数量相加
             //console.log(replyCount)
         }
 
         //console.log(totalCount)
-        item['commentNums'] = totalCount
+        item['commentNums'] = totalCount   //把totalCount赋给到data中的commentNums
     }
     const result = {
         total: count,   //总数据
