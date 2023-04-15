@@ -55,6 +55,11 @@ const articleSchema = new mongoose.Schema({
         ref: "Tag",
         require: true
     },
+    comment:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+        require: true
+    },
     //时间
     createdTime:{
         type: String,

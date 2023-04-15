@@ -8,10 +8,10 @@ const routes = (server) => {
     server.post('/comment',comment.createComment)
 
     //获取评论列表
-    server.get('/comment',comment.getListComment)
+    server.get('/comment/:id',comment.getListComment)
 
     //获取评论详请
-    server.get('/comment/:id',comment.getDetailComment)
+    server.get('/comment/get/:id',comment.getDetailComment)
 
     //删除评论
     server.get('/comment/d/:id',comment.deleteComment)

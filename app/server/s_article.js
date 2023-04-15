@@ -29,7 +29,7 @@ exports.getArticleList = async(req,res)=> {
     // 每页几条数据
     const pageSize = parseInt(req.query.pageSize) || 2;
     // 当前第一页
-    const paegNum = parseInt(req.query.paegNum) || 1;
+    const paegNum = parseInt(req.query.paegNum) || 2;
 
     //获取记录总数据，是一个预估值，不是准确值
     const count = await Article.estimatedDocumentCount();
@@ -38,17 +38,26 @@ exports.getArticleList = async(req,res)=> {
     const totalPages = Math.ceil(count / pageSize)
     console.log("总页："+totalPages)
 
-    await Article.find({})
+
+    const article = await Article.find({}).populate('author',{_id:0, username: 1}).select('_id title desc')
+    
+    
+
+    
+    /* await Article.find({})
+        .populate('author',{_id:0, username: 1})
         .sort({createdTime: -1})    // 字段倒叙排序，-1表示倒叙，反之正序
         .limit(pageSize)            // 显示的文档数
         .skip((paegNum - 1) * pageSize) // 跳过的页数
-        .select('-_id title desc').then(r => {  //显示的字段，-表示不显示
+        .select('-_id title desc')
+        .then(r => {  //显示的字段，-表示不显示
+
             const result = {
                 total: count,   //总数据
                 pageSize: pageSize, 
                 paegNum: paegNum,
                 totalPages: totalPages, //总页数
-                data: r
+                data: r,
             }
             res.json(result)
     }).catch(err => {
@@ -57,7 +66,7 @@ exports.getArticleList = async(req,res)=> {
             msg:"成功！",
             data: err,
         })
-    })
+    }) */
 }
 
 //获取指定文章

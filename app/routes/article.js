@@ -7,6 +7,9 @@ const config = require('../../config/index')
 const rjwt = require('restify-jwt-community')
 
 const routes = (server) => {
+    //jwt验证
+    //server.post('/article',rjwt({secret: config.JWT_SECRET}),article.createArticle)
+    //rjwt({ secret: config.JWT_SECRET })
     //发布文章
     server.post('/article',article.createArticle)
 

@@ -10,7 +10,7 @@ const routes = (server) => {
     // 修改分类
     server.patch('/category/:id',category.updateCategory);
     // 删除分类
-    server.post('/category/:id',category.deleteCategory);
+    server.get('/category/d/:id',category.deleteCategory);
 }   
 
 

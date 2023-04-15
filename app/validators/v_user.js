@@ -21,7 +21,7 @@ const userValidator = (data) => {
             "string.email": "email格式错误"
         }),
     })
-
+    
     return schema.validate(data)
 }
 

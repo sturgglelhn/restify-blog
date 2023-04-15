@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
 
-
+//密码验证
 exports.authenticate = async (email,password) => {
     return new Promise(async (resolve) => {
         const user = await User.findOne({email})

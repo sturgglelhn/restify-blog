@@ -19,7 +19,12 @@ const replySchema = new mongoose.Schema({
         require: true,
         index: true,
     },
-
+    // 用户
+    reply_user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        require: true
+    },
     // 时间
     createTime:{
         type: String,

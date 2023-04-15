@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         require: true,
         minlength: 6,
         maxlength: 100,
-        // select:false查询数据时不显示该项
+        //select:false查询数据时不显示该项
         //select: false,
     },
     // 邮箱
