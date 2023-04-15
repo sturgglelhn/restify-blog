@@ -13,6 +13,6 @@ restify+mongoose+joi+jwt+moment
   **----config  --mongoose数据连接**\
 **http**\
   **----core    --跨域**\
-  **----index   --路由的导入**\
+  **----index   --路由的导入**
 
   最后，希望能在node.js方面给你带来一点帮助
