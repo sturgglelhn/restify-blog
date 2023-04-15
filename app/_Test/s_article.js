@@ -40,35 +40,30 @@ exports.getArticleList = async(req,res)=> {
     const totalPages = Math.ceil(count / pageSize)
     console.log("总页："+totalPages)
 
-
-    const data = await Article.find({}).populate('author',{_id:0, username: 1})
-                                        .sort({createdTime: -1})
-                                        .limit(pageSize)            // 显示的文档数
-                                        .skip((paegNum - 1) * pageSize) // 跳过的页数
-                                        .select('title desc createdTime').lean()   //lean()的作用是把mongodb中的文档格式，生成JavaScript对象
-
-    //                                    
-    for(let item of data){
-        let commentList = await Comment.find({article_id: item._id}).sort({createdTime: -1}).select('-__v').lean()
-        let totalCount = commentList.length
-        for(var comment of commentList){
-            replyCount = await Reply.find({comment_id: comment._id}).sort({createdTime: -1}).select('-__v').countDocuments()
-            totalCount += replyCount
-            //console.log(replyCount)
-        }
-
-        //console.log(totalCount)
-        item['commentNums'] = totalCount
-    }
-    const result = {
-        total: count,   //总数据
-        pageSize: pageSize, 
-        paegNum: paegNum,
-        totalPages: totalPages, //总页数
-        data: data,
-    }
     
-    res.send(result)
+    await Article.find({})
+        .populate('author',{_id:0, username: 1})
+        .sort({createdTime: -1})    // 字段倒叙排序，-1表示倒叙，反之正序
+        .limit(pageSize)            // 显示的文档数
+        .skip((paegNum - 1) * pageSize) // 跳过的页数
+        .select('-_id title desc')
+        .then(r => {  //显示的字段，-表示不显示
+
+            const result = {
+                total: count,   //总数据
+                pageSize: pageSize, 
+                paegNum: paegNum,
+                totalPages: totalPages, //总页数
+                data: r,
+            }
+            res.json(result)
+    }).catch(err => {
+        res.json({
+            code:1,
+            msg:"成功！",
+            data: err,
+        })
+    })
 }
 
 //获取指定文章

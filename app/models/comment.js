@@ -13,7 +13,8 @@ const commentSchema = new mongoose.Schema({
     article_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Article",
-        require: true
+        require: true,
+        index: true,
     },
     // 评论用户
     reply_user_id:{

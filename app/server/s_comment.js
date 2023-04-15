@@ -45,6 +45,7 @@ exports.getListComment = async(req,res) => {
                                 .sort({createdTime: -1}).select('-__v').lean()
 
     for(let item of data){
+        console.log(item._id)
         let replyList = await Reply.find({comment_id: item._id}).select('-__v')
         item['replyList'] = replyList.length    //数量
         //item['replyList'] = replyList
